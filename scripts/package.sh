@@ -1,12 +1,19 @@
-# ensure dependencies are installed and ready to go
-./install_deps.sh
+#!/usr/bin/env bash
+set -euo pipefail
 
-cd ..
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd -- "$SCRIPT_DIR/.." && pwd)"
 
-# Clean out any pycache files to prevent their inclusion
-find . | grep -E "(/__pycache__$|\.pyc$|\.pyo$)" | xargs rm -rf
+# Ensure dependencies are installed and ready to go.
+"$SCRIPT_DIR/install_deps.sh"
 
-# Build deployment archive
+cd "$REPO_ROOT"
+
+# Clean out Python bytecode caches to prevent their inclusion.
+find . -type d -name '__pycache__' -prune -exec rm -rf -- {} +
+find . -type f \( -name '*.pyc' -o -name '*.pyo' \) -delete
+
+# Build deployment archive.
 zip -9 -r easyvocab.ankiaddon \
     *.py \
     src/*.py \
