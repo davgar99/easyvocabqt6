@@ -62,8 +62,8 @@ def process_word(col, deck, word, options, progress):
     # Remove any random whitespace or crud from the question
     question = word.strip()
 
-    # Reject any cards with blank text
-    if word == '':
+    # Reject any cards with blank text, including whitespace-only lines
+    if question == '':
         return
 
     ## Filter for dupes

@@ -18,15 +18,15 @@ def pull_fl_explanation(extra_data, pos):
         foreign_language_explanation_word_type = definitions[pos][0]
         foreign_language_explanation_details = ""
         
-        i = 0
-        for definition in definitions[pos][1]:
+        definition_list = definitions[pos][1]
+        for i, definition in enumerate(definition_list):
             text = f'{definition[0]}'
 
             if len(definition) > 2 and definition[2] is not None: text += f'\n<i>{definition[2]}</i>'
 
             foreign_language_explanation_details += text
 
-            if i + 1 < len(definitions[pos][1]):
+            if i + 1 < len(definition_list):
                 foreign_language_explanation_details += '<br>'
 
         return [
